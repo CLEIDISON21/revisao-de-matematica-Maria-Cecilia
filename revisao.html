@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudando os Meses e Dias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 20px;
+            padding: 10px;
+        }
+        h1 {
+            color: #2e8b57;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para o feedback */
+        .result {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            z-index: 9999;
+        }
+
+        .result.success {
+            color: #32CD32;
+        }
+
+        .result.failure {
+            color: #FF6347;
+        }
+
+        .explosion {
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Estudando os Meses e Dias</h1>
+    <form id="studyForm">
+        <!-- Pergunta 1 -->
+        <div class="question">
+            <p>1. Quais meses têm 31 dias? (Marque todos os corretos)</p>
+            <label><input type="checkbox" name="q1" value="janeiro"> Janeiro</label>
+            <label><input type="checkbox" name="q1" value="fevereiro"> Fevereiro</label>
+            <label><input type="checkbox" name="q1" value="marco"> Março</label>
+            <label><input type="checkbox" name="q1" value="maio"> Maio</label>
+            <label><input type="checkbox" name="q1" value="junho"> Junho</label>
+            <label><input type="checkbox" name="q1" value="julho"> Julho</label>
+            <label><input type="checkbox" name="q1" value="agosto"> Agosto</label>
+            <label><input type="checkbox" name="q1" value="outubro"> Outubro</label>
+            <label><input type="checkbox" name="q1" value="dezembro"> Dezembro</label>
+        </div>
+        <!-- Pergunta 2 -->
+        <div class="question">
+            <p>2. Quais meses têm 30 dias? (Marque todos os corretos)</p>
+            <label><input type="checkbox" name="q2" value="abril"> Abril</label>
+            <label><input type="checkbox" name="q2" value="junho"> Junho</label>
+            <label><input type="checkbox" name="q2" value="setembro"> Setembro</label>
+            <label><input type="checkbox" name="q2" value="novembro"> Novembro</label>
+            <label><input type="checkbox" name="q2" value="dezembro"> Dezembro</label>
+        </div>
+        <!-- Pergunta 3 -->
+        <div class="question">
+            <p>3. Quantos dias tem fevereiro em um ano bissexto?</p>
+            <label><input type="radio" name="q3" value="28"> 28 dias</label>
+            <label><input type="radio" name="q3" value="29"> 29 dias</label>
+            <label><input type="radio" name="q3" value="30"> 30 dias</label>
+        </div>
+        <!-- Pergunta 4 -->
+        <div class="question">
+            <p>4. O 1º semestre do ano tem quantos dias em um ano bissexto?</p>
+            <label><input type="radio" name="q4" value="181"> 181 dias</label>
+            <label><input type="radio" name="q4" value="182"> 182 dias</label>
+            <label><input type="radio" name="q4" value="183"> 183 dias</label>
+        </div>
+        <!-- Pergunta 5 -->
+        <div class="question">
+            <p>5. Quantos meses tem o ano?</p>
+            <label><input type="radio" name="q5" value="10"> 10 meses</label>
+            <label><input type="radio" name="q5" value="12"> 12 meses</label>
+            <label><input type="radio" name="q5" value="14"> 14 meses</label>
+        </div>
+        <!-- Botão para enviar -->
+        <button type="button" onclick="checkAnswers()">Enviar</button>
+    </form>
+    <div class="result" id="result"></div>
+
+    <script>
+        function checkAnswers() {
+            let correctAnswers = 0;
+
+            // Pergunta 1: Meses com 31 dias
+            const q1Correct = ["janeiro", "marco", "maio", "julho", "agosto", "outubro", "dezembro"];
+            const q1Selected = Array.from(document.querySelectorAll('input[name="q1"]:checked')).map(el => el.value);
+            if (q1Selected.sort().toString() === q1Correct.sort().toString()) {
+                correctAnswers++;
+            }
+
+            // Pergunta 2: Meses com 30 dias
+            const q2Correct = ["abril", "junho", "setembro", "novembro"];
+            const q2Selected = Array.from(document.querySelectorAll('input[name="q2"]:checked')).map(el => el.value);
+            if (q2Selected.sort().toString() === q2Correct.sort().toString()) {
+                correctAnswers++;
+            }
+
+            // Pergunta 3: Dias de fevereiro no ano bissexto
+            const q3Selected = document.querySelector('input[name="q3"]:checked');
+            if (q3Selected && q3Selected.value === "29") {
+                correctAnswers++;
+            }
+
+            // Pergunta 4: Dias do 1º semestre em um ano bissexto
+            const q4Selected = document.querySelector('input[name="q4"]:checked');
+            if (q4Selected && q4Selected.value === "182") {
+                correctAnswers++;
+            }
+
+            // Pergunta 5: Quantos meses tem o ano
+            const q5Selected = document.querySelector('input[name="q5"]:checked');
+            if (q5Selected && q5Selected.value === "12") {
+                correctAnswers++;
+            }
+
+            // Exibir resultado
+            const resultDiv = document.getElementById("result");
+            resultDiv.style.display = "flex";  // Exibir o feedback
+            resultDiv.classList.add("explosion");
+
+            if (correctAnswers === 5) {
+                resultDiv.textContent = "🎉 Parabéns! Você acertou todas as perguntas! 🎉";
+                resultDiv.classList.add("success");
+            } else {
+                resultDiv.textContent = `Você acertou ${correctAnswers} de 5. Continue tentando! 😊`;
+                resultDiv.classList.add("failure");
+            }
+
+            // Remover a animação após a exibição
+            setTimeout(() => {
+                resultDiv.classList.remove("explosion");
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
